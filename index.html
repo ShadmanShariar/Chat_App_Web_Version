@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body style="background-color: wheat;" align="center">
+   
+   <div style="height: 80%; background-color: rgb(9, 116, 14);">
+    <h1 style="padding-top: 0%; color: rgb(255, 255, 255);" >Shadman's Chat Room</h1>
+   </div>
+
+
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js"></script>
+<!-- include firebase database -->
+<script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-database.js"></script>
+ 
+
+
+
+<script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+    apiKey: "AIzaSyCKdNHNohqtkUDzplOXhQNJRFHW1jTOQZc",
+    authDomain: "my-chat-site-6d33e.firebaseapp.com",
+    databaseURL: "https://my-chat-site-6d33e-default-rtdb.firebaseio.com",
+    projectId: "my-chat-site-6d33e",
+    storageBucket: "my-chat-site-6d33e.appspot.com",
+    messagingSenderId: "1009288313635",
+    appId: "1:1009288313635:web:550e5f1c98e747d3df2a96",
+    measurementId: "G-BELZ2XXRVL"
+  };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    
+var username = window.prompt("Enter your username here");
+
+function sendMessage(){
+
+var message = document.getElementById("message").value;
+
+firebase.database().ref("messages").push().set({
+            "sender": username,
+            "message": message
+        });
+
+return false;
+}
+
+</script>
+
+<!-- create a list -->
+<ul style="list-style-type: none; font-size: larger; color: black" id="messages"></ul>
+
+<script>
+    // listen for incoming messages
+    firebase.database().ref("messages").on("child_added", function (snapshot) {
+        var html = "";
+        var ss = 'style="margin-bottom:1%;"';
+        // give each message a unique ID
+        html += "<li ";
+        html+=ss;
+
+        html+="id='message-" + snapshot.key + "'>";
+        html += snapshot.val().sender + "  :  " + snapshot.val().message;
+        html += "</li>";
+ 
+        document.getElementById("messages").innerHTML += html;
+    });
+</script>
+
+<form onsubmit="return sendMessage();">
+<input style="margin-left: 3%; height: 20px;" type="text" id="message" placeholder="type here" autocomplete="off">
+<button style="height: 30px; border-radius: 50%; background-color: blue; color: white;">Send</button>
+</form>
+
+
+
+</body>
+</html>
