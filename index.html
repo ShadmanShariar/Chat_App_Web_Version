@@ -56,6 +56,12 @@ firebase.database().ref("messages").push().set({
 return false;
 }
 
+function remove(){
+
+document.getElementById("message").value = "";
+
+}
+    
 </script>
 
 <!-- create a list -->
@@ -80,7 +86,7 @@ return false;
 
 <form onsubmit="return sendMessage();">
 <input style="margin-left: 3%; height: 20px;" type="text" id="message" placeholder="type here" autocomplete="off">
-<button style="height: 30px; border-radius: 50%; background-color: blue; color: white;">Send</button>
+<button style="height: 30px; border-radius: 50%; background-color: blue; color: white;" onclick="remove();">Send</button>
 </form>
 
 
